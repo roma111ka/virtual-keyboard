@@ -107,7 +107,6 @@ body{
      }
 
      &:active, &.active {
-        box-sizing: border-box;
         background-color: rgb(110, 110, 110);
         box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
      }
