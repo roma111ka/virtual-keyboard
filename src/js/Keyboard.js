@@ -1,7 +1,8 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
-import keysData from './keysDataset';
-import { createDomNode } from './createDomNodeScript';
+/* eslint-disable no-unused-expressions */
+/* eslint-disable import/extensions */
+import keysData from './keysDataset.js';
+import { createDomNode } from './createDomNodeScript.js';
 
 export default class Keyboard {
   constructor() {

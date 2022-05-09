@@ -1,6 +1,7 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-undef */
-import Keyboard from './Keyboard';
-import { createDomNode } from './createDomNodeScript';
+import Keyboard from './Keyboard.js';
+import { createDomNode } from './createDomNodeScript.js';
 
 const BODY = document.querySelector('body');
 const KEYBOARD = new Keyboard();
