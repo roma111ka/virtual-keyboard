@@ -44,7 +44,16 @@ const keyEvent = (event, btn, codeEvent ) =>{
     let cursor = textField.selectionStart;
     event.preventDefault();
     textField.focus();
-    console.log(event);
+    
+    if ( (codeEvent === 'AltLeft' && (event.shiftKey || KEYBOARD.shift))
+    || (codeEvent === 'AltRight' && (event.shiftKey || KEYBOARD.shift))
+    || (codeEvent === 'ShiftLeft' && event.altKey)
+    || (codeEvent === 'ShiftRight' && event.altKey)) {
+        console.log('11111111111111111111111');
+    KEYBOARD.changeLanguage(event);
+    KEYBOARD.removeShift(event);
+  }
+
     if (codeEvent === 'CapsLock') KEYBOARD.changeCapsLock(event);
     if (codeEvent === 'ShiftLeft' || codeEvent === 'ShiftRight') KEYBOARD.updateKeyboard(event);
     if (btn.dataset.noType !== 'true') {
@@ -93,8 +102,7 @@ const keyEvent = (event, btn, codeEvent ) =>{
       }
       textField.setSelectionRange(cursor, cursor);
     }
-
-  
+   
     if(symbol){
         let symbolBeforeCursor = textField.value.substring(0, cursor);
         let symbolAfterCursor = textField.value.substring(textField.selectionEnd);

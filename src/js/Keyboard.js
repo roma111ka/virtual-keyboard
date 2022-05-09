@@ -9,6 +9,8 @@ export default class Keyboard {
     }
 
     updateKeyboard(event) {
+        console.log(1)
+        
         if (event.shiftKey || this.shift) {
             
             document.querySelectorAll('.key__btn').forEach((e) => {
@@ -23,7 +25,7 @@ export default class Keyboard {
                 }
             });
           } else {
-           console.log(1)
+          
             document.querySelectorAll('.key__btn').forEach((e) => {
               if (e.dataset[this.lang]) {
                   console.log("z pfitk")
@@ -52,8 +54,12 @@ export default class Keyboard {
      }   
 
      changeLanguage(event){
-        this.lang === 'en' ? this.lang === 'ru' : this.lang === 'en';
-        localStorage.setItem('lang', this.lang);
+        if (this.lang === 'en') {
+            this.lang = 'ru';
+        } else {
+            this.lang = 'en';
+        }
+        localStorage.setItem('lang', this.lang)
         this.updateKeyboard(event);
      }
 
@@ -62,6 +68,7 @@ export default class Keyboard {
      }
 
     generateKeyBoard(){
+        this.loadLang();
         const KEYBOARD = createDomNode('div', '', 'keyboard');
         const KEYBOARD_CONTAINER = createDomNode('div', '', 'keyboard__container')
 
