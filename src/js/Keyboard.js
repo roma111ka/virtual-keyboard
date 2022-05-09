@@ -9,25 +9,33 @@ export default class Keyboard {
     }
 
     updateKeyboard(event) {
-        const { lang } = this.lang;
         if (event.shiftKey || this.shift) {
-          document.querySelectorAll('.key__btn').forEach((e) => {
-            if (e.dataset[`${lang}Shift`]) {
-              if (this.caps === true) {
-                e.innerHTML = e.dataset[`${lang}Shift`].toLowerCase();
-              } else e.innerHTML = e.dataset[`${lang}Shift`];
-            } else if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
-          });
-        } else {
-          document.querySelectorAll('.key__btn').forEach((e) => {
-            if (e.dataset[lang]) {
-              if (this.caps === true && !(event.shiftKey || this.shift)) {
-                e.innerHTML = e.dataset[lang].toUpperCase();
-              } else e.innerHTML = e.dataset[lang];
-            }
-          });
+            
+            document.querySelectorAll('.key__btn').forEach((e) => {
+              if (e.dataset[`${this.lang}Shift`]) {
+                  console.log("z pfitk 123")
+                if (this.caps === true) {
+                  e.innerHTML = e.dataset[`${this.lang}Shift`].toLowerCase();
+                } else e.innerHTML = e.dataset[`${this.lang}Shift`];
+              } else if (e.dataset[this.lang]) {
+                  e.innerHTML = e.dataset[this.lang];
+                  console.log(e.innerHTML)
+                }
+            });
+          } else {
+           console.log(1)
+            document.querySelectorAll('.key__btn').forEach((e) => {
+              if (e.dataset[this.lang]) {
+                  console.log("z pfitk")
+                if (this.caps === true && !(event.shiftKey || this.shift)) {
+                  e.innerHTML = e.dataset[this.lang].toUpperCase();
+                } else {
+                    e.innerHTML = e.dataset[this.lang];
+                }
+              }
+            });
+          }
         }
-      }
 
     removeShift(event) {
         if (this.shift) {
@@ -38,9 +46,20 @@ export default class Keyboard {
         }
       }
     changeCapsLock(event) {
-       this.caps === true ? this.caps = false: this.caps = true;
+       this.caps === true ? this.caps = false : this.caps = true;
+       console.log(this.caps)
        this.updateKeyboard(event);
      }   
+
+     changeLanguage(event){
+        this.lang === 'en' ? this.lang === 'ru' : this.lang === 'en';
+        localStorage.setItem('lang', this.lang);
+        this.updateKeyboard(event);
+     }
+
+     loadLang(){
+        localStorage.getItem('lang') ?  this.lang = localStorage.getItem('lang') : localStorage.setItem('lang', this.lang);
+     }
 
     generateKeyBoard(){
         const KEYBOARD = createDomNode('div', '', 'keyboard');
@@ -57,6 +76,17 @@ export default class Keyboard {
                    KEY_BTN.classList.add(element.class);
                }
                KEY_BTN.dataset.code = element.code;
+               if (element.key.ru && element.key.en) {
+                    KEY_BTN.dataset.ru = element.key.ru;
+                    KEY_BTN.dataset.en = element.key.en;
+               }
+               if (element.shift) {
+                    KEY_BTN.dataset.ruShift = element.shift.ru;
+                    KEY_BTN.dataset.enShift = element.shift.en;
+                }
+              if (element.noType) {
+                    KEY_BTN.dataset.noType = true;
+              }
                KEYS_ROW.append(KEY_BTN);
            });
            KEYBOARD_CONTAINER.append(KEYS_ROW);

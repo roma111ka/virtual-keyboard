@@ -44,11 +44,12 @@ const keyEvent = (event, btn, codeEvent ) =>{
     let cursor = textField.selectionStart;
     event.preventDefault();
     textField.focus();
-
+    console.log(event);
     if (codeEvent === 'CapsLock') KEYBOARD.changeCapsLock(event);
     if (codeEvent === 'ShiftLeft' || codeEvent === 'ShiftRight') KEYBOARD.updateKeyboard(event);
-    if (btn.dataset.noType !== true) {
+    if (btn.dataset.noType !== 'true') {
         console.log("active");
+       
         symbol = btn.textContent;
         KEYBOARD.removeShift(event);
     }
@@ -93,7 +94,7 @@ const keyEvent = (event, btn, codeEvent ) =>{
       textField.setSelectionRange(cursor, cursor);
     }
 
-
+  
     if(symbol){
         let symbolBeforeCursor = textField.value.substring(0, cursor);
         let symbolAfterCursor = textField.value.substring(textField.selectionEnd);
@@ -115,8 +116,9 @@ const keyEvent = (event, btn, codeEvent ) =>{
         textField.setSelectionRange(cursor + 1, cursor + 1);
         if (symbol === '    ') textField.setSelectionRange(cursor + 4, cursor + 4);
     }
+  
 };
-
+/* events */
 document.addEventListener('keyup', (event) => {
     console.log("happyUP");
     const BUTTON = document.querySelector(`[data-code=${event.code}]`);
@@ -124,20 +126,29 @@ document.addEventListener('keyup', (event) => {
         BUTTON.classList.remove('active');
         if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
             KEYBOARD.removeShift(event);
+            KEYBOARD.updateKeyboard(event);
         }
     }
 });
 
-/* events */
+
 document.addEventListener('keydown', (event) => {
-    console.log("happyDown");
     const BUTTON = document.querySelector(`[data-code=${event.code}]`);
     if (BUTTON) {
         BUTTON.classList.add('active');
         keyEvent(event, BUTTON, event.code);
     }
 });
-
+document.addEventListener('click', (event) => {
+    if (event.target.closest('.key__btn')) {
+      const BUTTON = event.target.closest('.key__btn');
+      if (BUTTON.dataset.code === 'ShiftLeft' || BUTTON.dataset.code === 'ShiftRight') {
+        KEYBOARD.shift = !KEYBOARD.shift;
+        BUTTON.classList.toggle('active');
+      }
+      keyEvent(event, BUTTON, BUTTON.dataset.code);
+    }
+  });
 
 window.onload = () =>{
     createHeader();
