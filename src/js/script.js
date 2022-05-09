@@ -49,7 +49,6 @@ const keyEvent = (event, btn, codeEvent ) =>{
     || (codeEvent === 'AltRight' && (event.shiftKey || KEYBOARD.shift))
     || (codeEvent === 'ShiftLeft' && event.altKey)
     || (codeEvent === 'ShiftRight' && event.altKey)) {
-        console.log('11111111111111111111111');
     KEYBOARD.changeLanguage(event);
     KEYBOARD.removeShift(event);
   }
